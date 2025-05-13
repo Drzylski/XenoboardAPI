@@ -1,2 +1,2 @@
 # XenoboardAPI
-The api for the Xenoboard app
+The api Eclipse project for the Xenoboard app
