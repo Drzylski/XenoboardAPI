@@ -3,9 +3,9 @@ package com.shinra.xeno;
 /*
  * Programmer: Damian Zylski
  * Date: 5/12/25
- * System: Windows 10 - Eclipse 
+ * System: Windows 10 - Eclipse
  * 
- * Purpose: Xenoboard is a message board application that caters to the Xeno category of games or video games in general. Api is a Java springboot Eclipse app. 
+ * Purpose: Xenoboard is a message board application that caters to the Xeno category of games or video games in general. API is a Java springboot Eclipse app. 
  */
 
 import org.springframework.boot.SpringApplication;
