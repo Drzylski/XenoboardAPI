@@ -14,7 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class XenoboardApiApplication 
 {
-
+	//The main app
 	public static void main(String[] args) 
 	{
 		SpringApplication.run(XenoboardApiApplication.class, args);
