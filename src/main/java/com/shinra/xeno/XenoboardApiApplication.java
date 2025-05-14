@@ -17,7 +17,6 @@ public class XenoboardApiApplication
 
 	public static void main(String[] args) 
 	{
-		//!!!
 		SpringApplication.run(XenoboardApiApplication.class, args);
 	}
 
