@@ -3,11 +3,16 @@ package com.shinra.xeno.model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.shinra.xeno.enums.user.Type;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
 
 /**
  * @author Damian Zylski
@@ -16,6 +21,8 @@ import jakarta.persistence.TemporalType;
  * 
  * @summary User class. Users interact with all other entities.
  */
+
+
 
 @Entity
 @Table(name="user")
@@ -31,10 +38,23 @@ public class User extends BaseEntity
 	private LocalDate dob;
 	@Column(name = "approved", nullable = false)
 	private boolean approved;
+	
+	@Transient
+	private int test;
+	
+//	@Enumerated(EnumType.ORDINAL)
+//	private Type type;
+	
 
 	public User()
 	{
 		super();
+	}
+	
+	public User(String uuid)
+	{
+		super();
+		this.setUuid(uuid);
 	}
 	
 	public User( String username, String email)
@@ -122,6 +142,24 @@ public class User extends BaseEntity
 	public void setApproved(boolean approved)
 	{
 		this.approved = approved;
+	}
+	
+	
+
+	/**
+	 * @return the test
+	 */
+	public int getTest()
+	{
+		return test;
+	}
+
+	/**
+	 * @param test the test to set
+	 */
+	public void setTest(int test)
+	{
+		this.test = test;
 	}
 
 	/**
