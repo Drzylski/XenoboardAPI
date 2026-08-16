@@ -18,15 +18,18 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
-@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true, jsr250Enabled = true)
 public class SecurityConfig
 {
 	
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) {
 		
-		http.authorizeHttpRequests((requests) -> requests
+		http.csrf((csrf) -> csrf.ignoringRequestMatchers("/Topics/UpdateTopic/*","/Topics/UploadTopicFiles/*")) //For testing
+		.authorizeHttpRequests((requests) -> requests
 				.requestMatchers(HttpMethod.GET,"/").permitAll()
+				.requestMatchers(HttpMethod.PUT,"/Topics/UpdateTopic/*").permitAll() //For Testing
+				.requestMatchers(HttpMethod.POST,"/Topics/UploadTopicFiles/*").permitAll() //For Testing
 				.anyRequest().permitAll()
 				//.anyRequest().authenticated()
 		);

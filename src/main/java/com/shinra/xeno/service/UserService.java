@@ -10,7 +10,7 @@ import com.shinra.xeno.model.User;
  * @summary User service interface.
  */
 
-public interface UserService
+public interface UserService extends BaseService<User, Long>
 {
 	User registerNewUser();
 }

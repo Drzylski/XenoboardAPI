@@ -1,5 +1,7 @@
 package com.shinra.xeno.service.impl;
 
+import java.time.LocalDateTime;
+
 /**
  * @author Damian Zylski
  * @since 6/09/26
@@ -14,6 +16,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +44,7 @@ public abstract class BaseServiceImpl <E extends BaseEntity, id> implements Base
 	{
 		if(entity.getId() == null) 
 		{
+			entity = updateAuditable(entity);
 			entity = baseRepository.save(entity);
 		}
 		else 
@@ -55,11 +59,12 @@ public abstract class BaseServiceImpl <E extends BaseEntity, id> implements Base
 	{
 		if(entity.getId() != null) 
 		{
+			entity = updateAuditable(entity);
 			entity = baseRepository.save(entity);
 		}
 		else 
 		{
-			 throw new EntityNotFoundException("Entity with ID "+entity.getId()+" exists");
+			 throw new EntityNotFoundException("Entity does not exist");
 		}
 		
 		return entity;
@@ -67,8 +72,12 @@ public abstract class BaseServiceImpl <E extends BaseEntity, id> implements Base
 	
 	public E updateAuditable(E entity)
 	{
-		//TODO check if this works
-		return update(entity);
+		if(entity.getCreatedOn() == null) entity.setCreatedOn(LocalDateTime.now());
+		entity.setUpdatedOn(LocalDateTime.now());
+		if(entity.getCreatedById() == null) entity.setCreatedById(1L);
+		entity.setUpdatedById(1L);
+		
+		return entity;
 	}
 	
 	public long countAll()
@@ -85,13 +94,13 @@ public abstract class BaseServiceImpl <E extends BaseEntity, id> implements Base
     
     public E findByUuid(E searchEntity)
     {    	
-    	ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("uuid", match -> match.startsWith());
+    	//This example matcher will include any primitives with default value like 0 or false. Must use matchingAny or it will use AND with any of those values. 
+    	ExampleMatcher matcher = ExampleMatcher.matchingAny().withMatcher("uuid", match -> match.contains())
+    			.withStringMatcher(StringMatcher.CONTAINING).withIgnoreNullValues();
     	
     	Example<E> example = Example.of(searchEntity, matcher);
     	
     	Optional<E> result = baseRepository.findOne(example);
-    	
-    	System.out.println(result.isEmpty());
     	
     	return result.orElseThrow();
     }
@@ -107,7 +116,7 @@ public abstract class BaseServiceImpl <E extends BaseEntity, id> implements Base
     {
     	E entity = this.findById(id);
     	
-    	entity.setDeleted(false);
+    	entity.setDeleted(!entity.isDeleted());
     	
     	entity = this.update(entity);
     }

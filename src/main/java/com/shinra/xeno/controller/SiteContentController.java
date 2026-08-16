@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shinra.xeno.model.SiteContent;
@@ -43,11 +45,14 @@ public class SiteContentController
      * @url /
      */
 	@GetMapping("/GetSiteContent/{id}")
-	public ResponseEntity<SiteContent> getSiteContentById(@PathVariable Long id)
+	@PreAuthorize("permitAll()")
+	//@PreAuthorize("hasRole('ROLE_USER')")
+	public ResponseEntity<SiteContent> getSiteContentById(@PathVariable Long id, @RequestParam Long userId)
 	{
 		
 		try
 		{
+			System.out.println("UserID: "+userId);
 			SiteContent siteContent = siteContentService.findById(id);
 			
 			return new ResponseEntity<SiteContent>(siteContent, HttpStatus.OK);
