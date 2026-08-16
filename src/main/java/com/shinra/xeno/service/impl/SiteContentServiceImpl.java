@@ -31,6 +31,7 @@ public class SiteContentServiceImpl extends BaseServiceImpl<SiteContent, Long> i
 		this.siteContentRepository = siteContentRepository;
 	}
 	
+	@Transactional(readOnly = true)
 	public SiteContent getSiteContent()
 	{
 		return null;
