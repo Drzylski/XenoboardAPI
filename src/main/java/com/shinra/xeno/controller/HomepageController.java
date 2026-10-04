@@ -1,5 +1,7 @@
 package com.shinra.xeno.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * @author Damian Zylski
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
 public class HomepageController
 {
+	private static final Logger logger = LoggerFactory.getLogger(HomepageController.class);
 
 	public HomepageController()
 	{
@@ -45,7 +49,7 @@ public class HomepageController
 		} 
 		catch (Exception e)
 		{
-			//TODO: Implement some real logging
+			logger.error(e.getMessage());
 			e.printStackTrace();
 			return new ResponseEntity<String>("Error loading homepage", HttpStatus.NOT_FOUND);
 		}

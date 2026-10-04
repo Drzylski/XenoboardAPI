@@ -1,5 +1,8 @@
 package com.shinra.xeno.controller;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -29,6 +32,8 @@ import com.shinra.xeno.service.SiteContentService;
 @RequestMapping(value = "/SiteContent", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SiteContentController
 {
+	private static final Logger logger = LoggerFactory.getLogger(SiteContentController.class);
+	
 	@Autowired
 	private SiteContentService siteContentService;
 	
@@ -53,13 +58,14 @@ public class SiteContentController
 		try
 		{
 			System.out.println("UserID: "+userId);
+			logger.info("UserId: "+userId);
 			SiteContent siteContent = siteContentService.findById(id);
 			
 			return new ResponseEntity<SiteContent>(siteContent, HttpStatus.OK);
 		} 
 		catch (Exception e)
 		{
-			//TODO: Implement some real logging
+			logger.error("Site Content with id "+id+" not found!",id);
 			e.printStackTrace();
 			return new ResponseEntity<SiteContent>( HttpStatus.NOT_FOUND);
 		}

@@ -1,5 +1,7 @@
 package com.shinra.xeno.service.impl;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
@@ -31,10 +33,13 @@ public class SiteContentServiceImpl extends BaseServiceImpl<SiteContent, Long> i
 		this.siteContentRepository = siteContentRepository;
 	}
 	
+	//Gets a site content item by id
 	@Transactional(readOnly = true)
-	public SiteContent getSiteContent()
+	public SiteContent getSiteContent(Long id)
 	{
-		return null;
+		Optional<SiteContent> siteContent = siteContentRepository.findById(id);
+		
+		return siteContent.orElseThrow();
 	}
 
 }

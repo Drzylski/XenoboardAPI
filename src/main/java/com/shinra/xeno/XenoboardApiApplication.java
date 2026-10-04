@@ -1,5 +1,8 @@
 package com.shinra.xeno;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * Programmer: Damian Zylski
  * Date: 5/12/25
@@ -18,6 +21,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class XenoboardApiApplication 
 {
+	private static final Logger logger = LoggerFactory.getLogger(XenoboardApiApplication.class);
+	
 	//The main app//
 	public static void main(String[] args) 
 	{
