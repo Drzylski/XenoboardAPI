@@ -1,5 +1,7 @@
 package com.shinra.xeno.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,6 +40,8 @@ import com.shinra.xeno.service.TopicService;
 @RequestMapping(value = "/Topics", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TopicController
 {
+	private static final Logger logger = LoggerFactory.getLogger(TopicController.class);
+	
 	@Autowired
 	private TopicService topicService;
 	
@@ -61,13 +65,14 @@ public class TopicController
 		try
 		{
 			System.out.println("UserID: "+topicLikeDTO.getUserId());
+			logger.info("UserID: "+topicLikeDTO.getUserId());
 			Topic topic = topicService.updateLikes(topicLikeDTO);
 			
 			return new ResponseEntity<Topic>(topic, HttpStatus.OK);
 		} 
 		catch (Exception e)
 		{
-			//TODO: Implement some real logging
+			logger.error(e.getMessage());
 			e.printStackTrace();
 			return new ResponseEntity<Topic>( HttpStatus.NOT_FOUND);
 		}
@@ -87,18 +92,15 @@ public class TopicController
 		
 		try
 		{
-			System.out.println(newTopicDto);
-			System.out.println("UserID: "+newTopicDto.getUuid());
+			logger.info("Updating topic");
 			Topic topic = topicService.updateTopic(newTopicDto);
-			//Topic topic = null;
 			
 			return new ResponseEntity<Topic>(topic, HttpStatus.OK);
 		} 
 		catch (Exception e)
 		{
-			//TODO: Implement some real logging
+			logger.error(e.getMessage());
 			e.printStackTrace();
-			System.out.println("Quack!");
 			return new ResponseEntity<Topic>( HttpStatus.BAD_REQUEST);
 		}
 	}
@@ -118,6 +120,8 @@ public class TopicController
 		try
 		{
 			System.out.println(fileUploadListDto.getFiles()[0].getOriginalFilename());
+			logger.info(fileUploadListDto.getFiles()[0].getOriginalFilename());
+			//System.out.println(fileUploadListDto.getId());
 			//System.out.println("UserID: "+newTopicDto.getUuid());
 			//Topic topic = topicService.updateTopic(newTopicDto);
 			Topic topic = null;
@@ -126,7 +130,7 @@ public class TopicController
 		} 
 		catch (Exception e)
 		{
-			//TODO: Implement some real logging
+			logger.error(e.getMessage());
 			e.printStackTrace();
 			System.out.println("Quack!");
 			return new ResponseEntity<String>("Fail", HttpStatus.BAD_REQUEST);

@@ -2,6 +2,8 @@ package com.shinra.xeno.model;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -37,7 +39,8 @@ public class Topic extends BaseEntity
 	@Column(name = "reported", nullable = false)
 	private boolean reported;
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "reported_by_date", nullable = true)
+	@CreationTimestamp
+	@Column(name = "reported_by_date",columnDefinition = "TIMESTAMP", nullable = true)
 	private LocalDateTime reportedByDate;
 	@Column(name = "reported_by_reason", nullable = true, length = 255)
 	private String reportedByReason;

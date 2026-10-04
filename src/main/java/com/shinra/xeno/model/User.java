@@ -25,7 +25,7 @@ import jakarta.persistence.Transient;
 
 
 @Entity
-@Table(name="user")
+@Table(name="users")
 public class User extends BaseEntity
 {
 	@Column(name = "username", nullable = false, length = 30)

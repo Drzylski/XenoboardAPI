@@ -72,10 +72,10 @@ public abstract class BaseServiceImpl <E extends BaseEntity, id> implements Base
 	
 	public E updateAuditable(E entity)
 	{
-		if(entity.getCreatedOn() == null) entity.setCreatedOn(LocalDateTime.now());
-		entity.setUpdatedOn(LocalDateTime.now());
-		if(entity.getCreatedById() == null) entity.setCreatedById(1L);
-		entity.setUpdatedById(1L);
+//		if(entity.getCreatedOn() == null) entity.setCreatedOn(LocalDateTime.now());
+//		entity.setUpdatedOn(LocalDateTime.now());
+//		if(entity.getCreatedById() == null) entity.setCreatedById(1L);
+//		entity.setUpdatedById(1L);
 		
 		return entity;
 	}

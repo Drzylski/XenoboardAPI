@@ -2,6 +2,8 @@ package com.shinra.xeno.model;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -28,11 +30,14 @@ public abstract class Auditable<U>
 {
 	@CreatedDate
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "created_on", nullable = false)
+	@CreationTimestamp
+	@Column(name = "created_on",columnDefinition = "TIMESTAMP", nullable = false)
 	private LocalDateTime createdOn;
+	
 	@LastModifiedDate
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "updated_on", nullable = false)
+	@UpdateTimestamp
+	@Column(name = "updated_on", columnDefinition = "TIMESTAMP", nullable = false)
 	private LocalDateTime updatedOn;
 	
 	@CreatedBy

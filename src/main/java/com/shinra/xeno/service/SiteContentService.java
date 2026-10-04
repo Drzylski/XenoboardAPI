@@ -12,5 +12,5 @@ import com.shinra.xeno.model.SiteContent;
 
 public interface SiteContentService extends BaseService<SiteContent, Long>
 {
-	SiteContent getSiteContent();
+	SiteContent getSiteContent(Long id);
 }

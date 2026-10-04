@@ -1,5 +1,7 @@
 package com.shinra.xeno.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,6 +27,7 @@ import com.shinra.xeno.service.UserService;
 @RequestMapping(value = "/Users", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserController
 {
+	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	private UserService userService;
@@ -54,7 +57,7 @@ public class UserController
 		} 
 		catch (Exception e)
 		{
-			//TODO: Implement some real logging
+			logger.error(e.getMessage());
 			e.printStackTrace();
 			return new ResponseEntity<User>( HttpStatus.NOT_FOUND);
 		}
